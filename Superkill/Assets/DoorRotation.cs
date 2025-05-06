@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DoorRotation : MonoBehaviour
+public class DoorRotation : MonoBehaviour, IInteractable
 {
     [Header("Settings")]
     public float openAngle = 90f;          // Угол открытия
@@ -18,17 +18,6 @@ public class DoorRotation : MonoBehaviour
 
     void Update()
     {
-        // Проверка нажатия клавиши
-        if (Input.GetKeyDown(interactKey))
-        {
-            // Проверка расстояния до игрока
-            /*if (IsPlayerCloseEnough())*/
-            //{
-                ToggleDoor();
-            //}
-        }
-
-        // Плавное вращение
         RotateDoor();
     }
 
@@ -48,11 +37,36 @@ public class DoorRotation : MonoBehaviour
         }
     }
 
-    bool IsPlayerCloseEnough()
+    /*bool IsPlayerCloseEnough()
     {
-        GameObject player = GameObject.FindGameObjectWithTag("Player");
+        gameObject.GetComponent<Renderer>().material.color = Color.green;
+        *//*GameObject player = GameObject.FindGameObjectWithTag("Player");
         if (player == null) return false;
 
-        return Vector3.Distance(player.transform.position, transform.position) <= interactDistance;
+        return Vector3.Distance(player.transform.position, transform.position) <= interactDistance;*//*
+    }*/
+
+    public void Interacte()
+    {
+        Debug.Log("Мы типа взаимодействуем");
+        if (Input.GetKeyDown(interactKey))
+        {
+            // Проверка расстояния до игрока
+            ToggleDoor();
+
+        }
+    }
+    public string ShowHint()
+    {
+        return "Нажмите Е для взаимодействия ";
+    }
+    public void OnCursorIn()
+    {
+       
+        gameObject.GetComponent<Renderer>().material.color = Color.green;
+    }
+    public void OnCursorOut()
+    {
+        gameObject.GetComponent<Renderer>().material.color = Color.white;
     }
 }
