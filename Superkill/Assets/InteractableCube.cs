@@ -6,7 +6,7 @@ public class InteractableCube : MonoBehaviour, IInteractable
 {
     public void OnCursorOut()
     {
-        //gameObject.GetComponent<Renderer>().material.color = Color.white;
+        gameObject.GetComponent<Renderer>().material.color = Color.white;
     }
 
     public void Interacte()
@@ -16,7 +16,7 @@ public class InteractableCube : MonoBehaviour, IInteractable
 
     public void OnCursorIn()
     {
-        //gameObject.GetComponent<Renderer>().material.color = Color.green;
+        gameObject.GetComponent<Renderer>().material.color = Color.green;
     }
 
     public string ShowHint()
