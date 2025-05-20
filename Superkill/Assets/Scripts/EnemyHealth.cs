@@ -1,15 +1,20 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class NewBehaviourScript : MonoBehaviour
 {
-    float _health = 100;
+    float _health = 10;
     bool _isHit;
+    Slider enemyHealthSlider;
+    private float currentEnemyHealth;
+    [SerializeField] private Slider EnemyHealthSlider;
 
     public void TakeDamage(float damage)
     {
-        if ((_health > 0) && (_isHit==true))
+        if (_health > 0)
         {
             _health -= damage;
         }
@@ -17,12 +22,38 @@ public class NewBehaviourScript : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        _isHit = true;
+        TakeDamage(1.0f);
     }
+    
 
     private void Update()
     {
-        TakeDamage(1.0f);
-        Debug.Log(_health);
+        if (_health <= 0)
+        {
+            Destroy(gameObject);
+        }
+        Debug.Log(_health);        
+    }
+
+    void InitializeEnHealth()
+    {
+        currentEnemyHealth = _health;
+        EnemyHealthSlider.maxValue = _health;
+        EnemyHealthSlider.value = _health;
+    }
+
+    void UpdateEnHealthUI()
+    {
+        EnemyHealthSlider.value = currentEnemyHealth;
+
+        float healthPercent = (float)currentEnemyHealth / _health;
+        EnemyHealthSlider.fillRect.GetComponent<Image>().color =
+            Color.Lerp(Color.red, Color.green, healthPercent);
+    }
+
+    private void Start()
+    {
+        InitializeEnHealth();
+        UpdateEnHealthUI();
     }
 }

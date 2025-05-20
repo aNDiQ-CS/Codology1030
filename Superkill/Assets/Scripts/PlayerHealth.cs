@@ -29,12 +29,12 @@ public class PlayerHealth : MonoBehaviour
 
     private void Update()
     {
-        /*// Для тестирования
+        
         if (Input.GetKeyDown(KeyCode.T))
             GetComponent<PlayerHealth>().TakeDamage(10);
 
         if (Input.GetKeyDown(KeyCode.H))
-            GetComponent<PlayerHealth>().Heal(20);*/
+            GetComponent<PlayerHealth>().Heal(20);
 
         if (Time.time - lastDamageTime > regenDelay && currentHealth < maxHealth)
         {
