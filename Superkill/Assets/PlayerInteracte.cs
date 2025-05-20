@@ -20,7 +20,7 @@ public class PlayerInteracte : MonoBehaviour
         RaycastHit hit;
         Ray ray = _camera.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0));
 
-        if (Physics.Raycast(ray, out hit, 5f))
+        if (Physics.Raycast(ray, out hit, 3f))
         {
             IInteractable interactableObject;
             if (hit.collider.TryGetComponent<IInteractable>(out interactableObject))

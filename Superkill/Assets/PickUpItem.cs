@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class PickUpItem : MonoBehaviour
@@ -7,8 +8,9 @@ public class PickUpItem : MonoBehaviour
     [Header("Настройки подбора")]
     public float pickupDistance = 2f; // Дистанция подбора
     public KeyCode pickupKey = KeyCode.E; // Клавиша подбора
+    public KeyCode trowkey = KeyCode.F; // Клавиша броска
     public Transform holdPosition; // Позиция удержания предмета
-
+    [SerializeField] private float _force = 10f;
     private GameObject heldObject; // Текущий удерживаемый объект
     private Rigidbody heldObjectRb; // Rigidbody удерживаемого объекта
     private bool isHolding = false; // Флаг удержания предмета
@@ -29,6 +31,11 @@ public class PickUpItem : MonoBehaviour
                 DropItem();
             }
         }
+        else if (Input.GetKeyDown(trowkey) && isHolding)
+        {
+            ThrowItem();
+        }
+
 
         // Если предмет в руках, можно применить дополнительные эффекты
         if (isHolding)
@@ -108,6 +115,29 @@ public class PickUpItem : MonoBehaviour
         // Сбрасываем родителя
         heldObject.transform.SetParent(null);
 
+        // Сбрасываем флаг и ссылки
+        isHolding = false;
+        heldObject = null;
+        heldObjectRb = null;
+    }
+    // Включаем физику обратно
+    void ThrowItem()
+    {
+        if (heldObjectRb != null)
+        {
+            heldObjectRb.isKinematic = false; // Включаем физику обратно
+        }
+
+        // Возвращаем оригинальный слой
+        heldObject.layer = LayerMask.NameToLayer("Default");
+        foreach (Collider col in heldObject.GetComponents<Collider>())
+        {
+            col.enabled = true; // Включаем коллайдеры
+        }
+
+        // Сбрасываем родителя
+        heldObject.transform.SetParent(null);
+        heldObjectRb.AddForce(Camera.main.transform.forward * _force, ForceMode.Impulse);
         // Сбрасываем флаг и ссылки
         isHolding = false;
         heldObject = null;
