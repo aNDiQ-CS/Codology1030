@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -23,6 +24,7 @@ public class ChasePlayerWithPatrol : MonoBehaviour
     private float waitTimer = 0f;
     private bool isWaiting = false;
     private bool isChasing = false;
+    private bool canShoot = true;
 
     void Start()
     {
@@ -63,7 +65,9 @@ public class ChasePlayerWithPatrol : MonoBehaviour
                 if (distanceToPlayer <= stoppingDistance * 1.5f)
                 {
                     FaceTarget(player.position);
-                }
+                    if (canShoot)
+                        StartCoroutine(shoot());
+                }                
             }
             else
             {
@@ -81,6 +85,13 @@ public class ChasePlayerWithPatrol : MonoBehaviour
                 }
             }
         }
+    }
+    IEnumerator shoot()
+    {
+        canShoot = false;
+        Debug.Log("Ïèó è Ïàó");
+        yield return new WaitForSeconds(1f);
+        canShoot = true;
     }
 
     void Patrol()
