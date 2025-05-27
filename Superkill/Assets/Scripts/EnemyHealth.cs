@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class NewBehaviourScript : MonoBehaviour
+public class EnemyHealth : MonoBehaviour
 {
     float _health = 10;
     bool _isHit;
@@ -20,10 +20,10 @@ public class NewBehaviourScript : MonoBehaviour
         }
     }
 
-    private void OnCollisionEnter(Collision collision)
+    /*private void OnCollisionEnter(Collision collision)
     {
         TakeDamage(1.0f);
-    }
+    }*/
     
 
     private void Update()
