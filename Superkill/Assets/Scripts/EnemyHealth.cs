@@ -6,13 +6,12 @@ using UnityEngine.UI;
 
 public class EnemyHealth : MonoBehaviour
 {
-    float _health = 10;
+    int _health = 10;
     bool _isHit;
-    Slider enemyHealthSlider;
-    private float currentEnemyHealth;
+    private int currentEnemyHealth;
     [SerializeField] private Slider EnemyHealthSlider;
 
-    public void TakeDamage(float damage)
+    public void TakeDamage(int damage)
     {
         if (_health > 0)
         {
@@ -20,19 +19,22 @@ public class EnemyHealth : MonoBehaviour
         }
     }
 
-    /*private void OnCollisionEnter(Collision collision)
-    {
-        TakeDamage(1.0f);
-    }*/
-    
-
     private void Update()
     {
         if (_health <= 0)
         {
             Destroy(gameObject);
         }
-        Debug.Log(_health);        
+        Debug.Log(_health);
+        UpdateEnHealthUI();
+    }
+
+    
+
+    void Start()
+    {
+        InitializeEnHealth();
+        UpdateEnHealthUI();
     }
 
     void InitializeEnHealth()
@@ -48,12 +50,6 @@ public class EnemyHealth : MonoBehaviour
 
         float healthPercent = (float)currentEnemyHealth / _health;
         EnemyHealthSlider.fillRect.GetComponent<Image>().color =
-            Color.Lerp(Color.red, Color.green, healthPercent);
-    }
-
-    private void Start()
-    {
-        InitializeEnHealth();
-        UpdateEnHealthUI();
+            Color.Lerp(Color.green, Color.red, healthPercent);
     }
 }
