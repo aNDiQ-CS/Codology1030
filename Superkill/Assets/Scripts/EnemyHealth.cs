@@ -5,28 +5,27 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class EnemyHealth : MonoBehaviour
-{
-    int _health = 10;
+    {
     bool _isHit;
-    private int currentEnemyHealth;
+    [SerializeField] private int currentEnemyHealth;
     [SerializeField] private Slider EnemyHealthSlider;
 
     public void TakeDamage(int damage)
     {
-        if (_health > 0)
+        if (currentEnemyHealth > 0)
         {
-            _health -= damage;
+            currentEnemyHealth -= damage;
         }
+        UpdateEnHealthUI();
+
     }
 
     private void Update()
     {
-        if (_health <= 0)
+        if (currentEnemyHealth <= 0)
         {
             Destroy(gameObject);
         }
-        Debug.Log(_health);
-        UpdateEnHealthUI();
     }
 
     
@@ -39,17 +38,12 @@ public class EnemyHealth : MonoBehaviour
 
     void InitializeEnHealth()
     {
-        currentEnemyHealth = _health;
-        EnemyHealthSlider.maxValue = _health;
-        EnemyHealthSlider.value = _health;
+        EnemyHealthSlider.maxValue = currentEnemyHealth;
+        EnemyHealthSlider.value = currentEnemyHealth;
     }
 
     void UpdateEnHealthUI()
     {
         EnemyHealthSlider.value = currentEnemyHealth;
-
-        float healthPercent = (float)currentEnemyHealth / _health;
-        EnemyHealthSlider.fillRect.GetComponent<Image>().color =
-            Color.Lerp(Color.green, Color.red, healthPercent);
     }
 }
