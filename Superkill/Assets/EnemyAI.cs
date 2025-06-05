@@ -25,6 +25,7 @@ public class ChasePlayerWithPatrol : MonoBehaviour
     private bool isWaiting = false;
     private bool isChasing = false;
     private bool canShoot = true;
+    public Material[] materials;
 
     void Start()
     {
@@ -59,6 +60,7 @@ public class ChasePlayerWithPatrol : MonoBehaviour
                     isChasing = true;
                     agent.speed = chaseSpeed;
                     agent.stoppingDistance = stoppingDistance;
+                    gameObject.GetComponent<Renderer>().material = materials[0];
                 }
                 agent.SetDestination(player.position);
 
@@ -77,6 +79,7 @@ public class ChasePlayerWithPatrol : MonoBehaviour
                     agent.speed = patrolSpeed;
                     agent.stoppingDistance = 0f;
                     MoveToPatrolPoint();
+                    gameObject.GetComponent<Renderer>().material = materials[1];
                 }
 
                 if (patrolPoints.Length > 0 && !isChasing)
